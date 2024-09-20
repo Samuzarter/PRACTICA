@@ -1,7 +1,8 @@
 CREATE DATABASE Inventario;
 GO
 
-Use Inventario
+Use Inventario;
+GO
 
 CREATE TABLE [Estados]
 (
@@ -46,13 +47,15 @@ CREATE TABLE [Proveedores](
 );
 GO
 
+
 CREATE TABLE [Productos](
 	[Id] INT NOT NULL,
-	[Nombre] NVARCHAR(100) NOT NULL,
+	[Nombre] NVARCHAR(60) NOT NULL,
+	[Descripcion] NVARCHAR(150),
 	[Stock] INT DEFAULT 0,
 	[Fecha_llegada] DATETIME NOT NULL,
-	[Fecha_Vencimiento] DATETIME NOT NULL,
-	[Precio_Unitario] DECIMAL(6,2) NOT NULL,
+	[Fecha_vencimiento] DATETIME NOT NULL,
+	[Precio_unitario] DECIMAL(6,2) NOT NULL,
 	[Categoria] INT NOT NULL,
 	[Estado]  INT NOT NULL,
 	[Proveedor]  INT NOT NULL,
@@ -65,12 +68,12 @@ GO
 
 CREATE TABLE [Estantes](
 	[Id] INT NOT NULL,
-	[Id_Producto]  INT NOT NULL,
+	[Producto]  INT NOT NULL,
 	[Cantidad_producto] INT DEFAULT 0,
 	[Bodega]  INT NOT NULL,
 	[Categoria]  INT NOT NULL,
 	CONSTRAINT [PK_Estantes] PRIMARY KEY CLUSTERED ([Id]),
-	CONSTRAINT [FK_Estantes_Productos] FOREIGN KEY ([Id_Producto]) REFERENCES [Productos] ([Id]) ON DELETE NO ACTION ON UPDATE NO ACTION,
+	CONSTRAINT [FK_Estantes_Productos] FOREIGN KEY ([Producto]) REFERENCES [Productos] ([Id]) ON DELETE NO ACTION ON UPDATE NO ACTION,
 	CONSTRAINT [FK_Estantes_Bodegas] FOREIGN KEY ([Bodega]) REFERENCES [Bodegas] ([Id]) ON DELETE NO ACTION ON UPDATE NO ACTION,
 	CONSTRAINT [FK_Estantes_Categorias] FOREIGN KEY ([Categoria]) REFERENCES [Categorias] ([Id]) ON DELETE NO ACTION ON UPDATE NO ACTION
 );
